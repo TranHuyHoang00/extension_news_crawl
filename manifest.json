@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "News Crawler",
+  "version": "1.0.0",
+  "description": "Crawl bài viết từ trang đầu của các chuyên mục tin tức, gửi HTML lên Kafka qua gateway",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "tabs",
+    "scripting",
+    "sidePanel"
+  ],
+  "optional_host_permissions": ["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "News Crawler"
+  },
+  "minimum_chrome_version": "116"
+}

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <title>News Crawler</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>News Crawler</h1>
+        <div id="tabInfo" class="muted"></div>
+      </div>
+      <span id="badge" class="badge off">Tắt</span>
+    </header>
+
+    <form id="form" autocomplete="off">
+      <label
+        >Link home
+        <span class="muted">(không bắt buộc, trống thì dùng trang chủ của link cate)</span>
+        <input id="home" type="url" spellcheck="false" placeholder="https://example.com/" />
+      </label>
+
+      <label
+        >Link cate
+        <span class="muted">(mỗi dòng một link, cùng site với link home; trống thì quét link home)</span>
+        <textarea
+          id="cates"
+          rows="4"
+          spellcheck="false"
+          placeholder="https://example.com/the-gioi/"
+        ></textarea>
+        <small id="catesHint" class="hint"></small>
+      </label>
+
+      <label
+        >Regex lọc link bài viết
+        <input
+          id="regex"
+          type="text"
+          spellcheck="false"
+          placeholder="^https://example\.com/[a-z0-9-]+-\d+\.html$"
+        />
+        <small id="regexHint" class="hint"></small>
+      </label>
+
+      <label
+        >Lịch chạy (cron) <span class="muted">phút giờ ngày tháng thứ</span>
+        <input id="cron" type="text" placeholder="*/30 * * * *" />
+        <small id="cronHint" class="hint"></small>
+      </label>
+
+      <div class="row">
+        <label
+          >Delay ngẫu nhiên (giây)
+          <span class="pair">
+            <input id="delayMin" type="number" min="0" max="120" step="0.5" /> –
+            <input id="delayMax" type="number" min="0" max="120" step="0.5" />
+          </span>
+        </label>
+        <label
+          >Giữ cache (ngày)
+          <input id="cacheDays" type="number" min="1" max="365" step="1" />
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Kafka</legend>
+        <label
+          >Gateway URL
+          <input id="gatewayUrl" type="url" spellcheck="false" />
+        </label>
+        <label
+          >API key
+          <span class="pair">
+            <input id="apiKey" type="password" spellcheck="false" autocomplete="off" />
+            <button type="button" id="btnShowKey" class="small">Hiện</button>
+          </span>
+        </label>
+        <div class="row">
+          <label
+            >Topic
+            <input id="topic" type="text" spellcheck="false" />
+          </label>
+          <label
+            >Batch size
+            <input id="batchSize" type="number" min="1" max="100" step="1" />
+          </label>
+        </div>
+        <small class="hint"
+          >Gửi khi đủ batch size hoặc dữ liệu đạt khoảng 4 MB. Hết lượt chạy thì gửi nốt phần
+          còn lại.</small
+        >
+      </fieldset>
+
+      <div id="errors" class="errors" hidden></div>
+
+      <div class="actions">
+        <button type="button" id="btnSave" class="primary">Lưu &amp; bật lịch</button>
+        <button type="button" id="btnStop">Tắt lịch</button>
+        <button type="button" id="btnRun">Chạy ngay</button>
+        <button type="button" id="btnTest">Test crawl</button>
+        <button hidden type="button" id="btnTestGw" class="wide">
+          Test gateway <span class="muted">(gửi 1 message test vào topic)</span>
+        </button>
+      </div>
+    </form>
+
+    <section class="status">
+      <dl>
+        <dt>Lần chạy tới</dt>
+        <dd id="nextRun">—</dd>
+        <dt>Lần chạy trước</dt>
+        <dd id="lastRun">—</dd>
+        <dt>Đã gửi (tab này)</dt>
+        <dd id="totalSent">0</dd>
+        <dt>Chờ gửi</dt>
+        <dd>
+          <span id="pendingCount">0</span> bài
+          <button type="button" id="btnFlush" class="link">gửi ngay</button>
+        </dd>
+        <dt>Cache</dt>
+        <dd>
+          <span id="seenCount">0</span> link<span id="cacheKeep" class="muted"></span>
+          <button type="button" id="btnClear" class="link">xoá cache</button>
+        </dd>
+      </dl>
+      <div id="lastError" class="errors" hidden></div>
+    </section>
+
+    <section id="testBox" hidden>
+      <h2>Kết quả test</h2>
+      <div id="testSummary"></div>
+      <details open>
+        <summary>Danh sách link</summary>
+        <ol id="testLinks"></ol>
+      </details>
+      <details open>
+        <summary>Bài mẫu (html đã rút gọn)</summary>
+        <pre id="testSample"></pre>
+      </details>
+    </section>
+
+    <section>
+      <h2>Nhật ký</h2>
+      <pre id="logs" class="logs"></pre>
+    </section>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>
