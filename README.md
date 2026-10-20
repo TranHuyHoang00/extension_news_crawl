@@ -16,11 +16,11 @@ Extension Chrome (Manifest V3) crawl bài viết từ **trang đầu** của cá
 
 1. Mở một tab vào site cần crawl (tab này dành riêng cho crawler, đừng dùng để lướt web).
 2. Bấm icon extension. Side panel **riêng của tab này** mở ở bên phải (cần Chrome 116+). Nhập:
-   - **Link home** (không bắt buộc): trước mỗi lượt, tab đang ở domain khác thì được đưa về link này. Để trống thì dùng trang chủ của domain link cate (ví dụ `https://vnexpress.net/`).
+   - **Link home** (không bắt buộc): trước mỗi lượt, tab đang ở domain khác thì được đưa về link này. Để trống thì dùng trang chủ của domain link cate (ví dụ `https://www.timesofisrael.com/`).
    - **Link cate**: mỗi dòng một link chuyên mục, **cùng site với link home**. Để trống thì quét link home. Ô bên dưới hiện site đang dùng.
    - **Regex lọc link bài viết**: bắt buộc. Chỉ link khớp regex mới được crawl. Ví dụ:
      - `^https://www\.timesofisrael\.com/(?:[a-z0-9]+-){4,}[a-z0-9]+/$`
-     - `^https://vnexpress\.net/[a-z0-9-]+-\d+\.html$`
+     - `^https://www\.nbr\.co\.nz/(?!tag/|tags/|author/|authors/|topic/|topics/|category/|page/)[a-z0-9-]+/[a-z0-9]+(?:-[a-z0-9]+){3,}/$`
    - **Lịch chạy (cron)**: ví dụ `*/30 * * * *`. Ô bên dưới hiện 3 lần chạy tiếp theo.
    - **Delay ngẫu nhiên**: chờ ngẫu nhiên trong khoảng này trước mỗi request tới site.
    - **Giữ cache (ngày)**: link đã gửi được nhớ bao lâu để không gửi lại (mặc định 30).
