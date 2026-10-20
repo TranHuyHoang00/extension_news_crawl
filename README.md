@@ -1,4 +1,4 @@
-# News Crawler
+# News Craw
 
 Extension Chrome (Manifest V3) crawl bài viết từ **trang đầu** của các chuyên mục (cate) trên các trang tin tức, lấy **nguyên văn HTML** từng bài và gửi lên Kafka qua gateway theo batch.
 
